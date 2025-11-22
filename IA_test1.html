@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>HCIA-AI Practice Test</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f7fb;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 24px 16px 40px;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #1f2933;
+    }
+    .page-header {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: #111827;
+    }
+    .page-header-logo {
+      flex: 0 0 auto;
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      background: #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #4b5563;
+    }
+    .page-header-text {
+      flex: 1 1 auto;
+      min-width: 220px;
+    }
+    .page-header-text strong {
+      font-weight: 700;
+    }
+    .page-header-line {
+      margin: 2px 0;
+    }
+    .page-header-meta {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    .intro {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+    .question-card {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+      border-left: 4px solid transparent;
+    }
+    .question-card.correct {
+      border-left-color: #22c55e;
+    }
+    .question-card.incorrect {
+      border-left-color: #ef4444;
+    }
+    .question-header {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #111827;
+    }
+    .question-type {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+    .options {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+    .option {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.93rem;
+      color: #111827;
+    }
+    .option input {
+      margin-right: 6px;
+    }
+    .feedback {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: #f9fafb;
+      font-size: 0.9rem;
+      display: none;
+    }
+    .feedback.correct {
+      border-left: 3px solid #22c55e;
+    }
+    .feedback.incorrect {
+      border-left: 3px solid #ef4444;
+    }
+    .feedback-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .feedback-en,
+    .feedback-pt {
+      margin-top: 4px;
+    }
+    .feedback-pt strong {
+      font-weight: 600;
+    }
+    .submit-wrapper {
+      text-align: center;
+      margin: 24px 0;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 9999px;
+      padding: 10px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4);
+      transition: background 0.15s ease, transform 0.05s ease;
+    }
+    button:hover {
+      background: #1d4ed8;
+    }
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 4px rgba(37, 99, 235, 0.4);
+    }
+    #result {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      margin-top: 16px;
+      font-size: 0.95rem;
+      display: none;
+    }
+    #result h2 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      text-align: left;
+    }
+    #result-summary {
+      margin-bottom: 8px;
+    }
+    #wrong-list {
+      margin-top: 4px;
+      color: #b91c1c;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 600px) {
+      .question-card {
+        padding: 12px 14px;
+      }
+      .intro, #result, .page-header {
+        padding: 12px 14px;
+      }
+      .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- CABEÇALHO IFBA / PROVA -->
+    <div class="page-header">
+      <div class="page-header-logo">
+        <!-- Você pode substituir por uma imagem usando <img> -->
+        IFBA<br/>LOGO
+      </div>
+      <div class="page-header-text">
+        <div class="page-header-line"><strong>IFBA – Instituto Federal da Bahia – Campus Jequié</strong></div>
+        <div class="page-header-line"><strong>Curso:</strong> Tecnologia / Redes / IA (ajuste conforme necessário)</div>
+        <div class="page-header-line"><strong>Disciplina:</strong> HCIA-AI Study / Training</div>
+        <div class="page-header-line"><strong>Professor:</strong> Prof. Givanildo J. Santos</div>
+        <div class="page-header-meta">
+          <span><strong>Aluno(a):</strong> ________________________________</span><br>
+          <span><strong>Data:</strong> ____ / ____ / ______</span>
+        </div>
+      </div>
+    </div>
+
+    <h1>HCIA-AI Practice Test</h1>
+    <div class="intro">
+      <p><strong>Instruções (PT):</strong> Responda todas as questões e clique em <em>“Submit Answers”</em>. Ao final, o sistema mostrará sua pontuação, quais questões você errou e as explicações (inglês + português).</p>
+      <p><strong>Instructions (EN):</strong> Answer all questions, then click <em>“Submit Answers”</em>. The system will show your score, which questions you missed, and explanations (EN + PT).</p>
+    </div>
+
+    <form id="quiz-form">
+      <!-- SECTION 1: Single-choice (Q1–Q20) -->
+      <h2>Section 1 – Single-choice Questions (one correct answer)</h2>
+
+      <!-- Q1 -->
+      <div class="question-card" id="question-1">
+        <div class="question-header">Q1. Which of the following best describes Artificial Intelligence according to the training material?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q1" value="A" data-question="1"> A. Simulating biological neurons exactly</label>
+          <label class="option"><input type="radio" name="q1" value="B" data-question="1"> B. Enabling machines to perform tasks requiring human intelligence</label>
+          <label class="option"><input type="radio" name="q1" value="C" data-question="1"> C. Creating large datasets for humans to analyze</label>
+          <label class="option"><input type="radio" name="q1" value="D" data-question="1"> D. Replacing traditional computing architectures</label>
+          <label class="option"><input type="radio" name="q1" value="E" data-question="1"> E. Building specialized hardware chips only</label>
+        </div>
+        <div class="feedback" id="feedback-1"></div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-card" id="question-2">
+        <div class="question-header">Q2. Which learning paradigm requires labeled data?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q2" value="A" data-question="2"> A. Reinforcement Learning</label>
+          <label class="option"><input type="radio" name="q2" value="B" data-question="2"> B. Unsupervised Learning</label>
+          <label class="option"><input type="radio" name="q2" value="C" data-question="2"> C. Clustering</label>
+          <label class="option"><input type="radio" name="q2" value="D" data-question="2"> D. Supervised Learning</label>
+          <label class="option"><input type="radio" name="q2" value="E" data-question="2"> E. Autoencoding</label>
+        </div>
+        <div class="feedback" id="feedback-2"></div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-card" id="question-3">
+        <div class="question-header">Q3. In a typical machine learning workflow, feature engineering occurs:</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q3" value="A" data-question="3"> A. After model deployment</label>
+          <label class="option"><input type="radio" name="q3" value="B" data-question="3"> B. Only during hyperparameter tuning</label>
+          <label class="option"><input type="radio" name="q3" value="C" data-question="3"> C. After data preprocessing and before model training</label>
+          <label class="option"><input type="radio" name="q3" value="D" data-question="3"> D. Only in unsupervised learning</label>
+          <label class="option"><input type="radio" name="q3" value="E" data-question="3"> E. Only with neural networks</label>
+        </div>
+        <div class="feedback" id="feedback-3"></div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-card" id="question-4">
+        <div class="question-header">Q4. Which problem is caused by a model fitting noise in the training set?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q4" value="A" data-question="4"> A. Generalization</label>
+          <label class="option"><input type="radio" name="q4" value="B" data-question="4"> B. Underfitting</label>
+          <label class="option"><input type="radio" name="q4" value="C" data-question="4"> C. Overfitting</label>
+          <label class="option"><input type="radio" name="q4" value="D" data-question="4"> D. Regularization</label>
+          <label class="option"><input type="radio" name="q4" value="E" data-question="4"> E. Feature scaling</label>
+        </div>
+        <div class="feedback" id="feedback-4"></div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-card" id="question-5">
+        <div class="question-header">Q5. Which metric is most appropriate for evaluating imbalanced classification tasks?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q5" value="A" data-question="5"> A. Accuracy</label>
+          <label class="option"><input type="radio" name="q5" value="B" data-question="5"> B. Recall</label>
+          <label class="option"><input type="radio" name="q5" value="C" data-question="5"> C. Dataset size</label>
+          <label class="option"><input type="radio" name="q5" value="D" data-question="5"> D. Loss variance</label>
+          <label class="option"><input type="radio" name="q5" value="E" data-question="5"> E. Activation rate</label>
+        </div>
+        <div class="feedback" id="feedback-5"></div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-card" id="question-6">
+        <div class="question-header">Q6. In neural networks, the function used to introduce non-linearity is called:</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q6" value="A" data-question="6"> A. Optimizer</label>
+          <label class="option"><input type="radio" name="q6" value="B" data-question="6"> B. Activation function</label>
+          <label class="option"><input type="radio" name="q6" value="C" data-question="6"> C. Kernel initializer</label>
+          <label class="option"><input type="radio" name="q6" value="D" data-question="6"> D. Regularizer</label>
+          <label class="option"><input type="radio" name="q6" value="E" data-question="6"> E. Decoder</label>
+        </div>
+        <div class="feedback" id="feedback-6"></div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="question-card" id="question-7">
+        <div class="question-header">Q7. Which layer is primarily responsible for feature extraction in a CNN?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q7" value="A" data-question="7"> A. Fully-connected layer</label>
+          <label class="option"><input type="radio" name="q7" value="B" data-question="7"> B. Recurrent layer</label>
+          <label class="option"><input type="radio" name="q7" value="C" data-question="7"> C. Convolution layer</label>
+          <label class="option"><input type="radio" name="q7" value="D" data-question="7"> D. Softmax layer</label>
+          <label class="option"><input type="radio" name="q7" value="E" data-question="7"> E. Dropout layer</label>
+        </div>
+        <div class="feedback" id="feedback-7"></div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="question-card" id="question-8">
+        <div class="question-header">Q8. Which network type is designed to handle sequential data?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q8" value="A" data-question="8"> A. CNN</label>
+          <label class="option"><input type="radio" name="q8" value="B" data-question="8"> B. GAN</label>
+          <label class="option"><input type="radio" name="q8" value="C" data-question="8"> C. RNN</label>
+          <label class="option"><input type="radio" name="q8" value="D" data-question="8"> D. Autoencoder</label>
+          <label class="option"><input type="radio" name="q8" value="E" data-question="8"> E. DBN</label>
+        </div>
+        <div class="feedback" id="feedback-8"></div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="question-card" id="question-9">
+        <div class="question-header">Q9. Which optimization algorithm adapts learning rates independently for each parameter?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q9" value="A" data-question="9"> A. SGD</label>
+          <label class="option"><input type="radio" name="q9" value="B" data-question="9"> B. Momentum</label>
+          <label class="option"><input type="radio" name="q9" value="C" data-question="9"> C. Adam</label>
+          <label class="option"><input type="radio" name="q9" value="D" data-question="9"> D. LR scheduler</label>
+          <label class="option"><input type="radio" name="q9" value="E" data-question="9"> E. L2 optimizer</label>
+        </div>
+        <div class="feedback" id="feedback-9"></div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="question-card" id="question-10">
+        <div class="question-header">Q10. MindSpore uses which mechanism for automatic gradient computation?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q10" value="A" data-question="10"> A. Symbolic graph rewriting</label>
+          <label class="option"><input type="radio" name="q10" value="B" data-question="10"> B. Static inference</label>
+          <label class="option"><input type="radio" name="q10" value="C" data-question="10"> C. Auto-differentiation</label>
+          <label class="option"><input type="radio" name="q10" value="D" data-question="10"> D. Rule-based estimation</label>
+          <label class="option"><input type="radio" name="q10" value="E" data-question="10"> E. Manual gradient tables</label>
+        </div>
+        <div class="feedback" id="feedback-10"></div>
+      </div>
+
+      <!-- Q11 -->
+      <div class="question-card" id="question-11">
+        <div class="question-header">Q11. Which of the following Ascend devices is optimized for training tasks?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q11" value="A" data-question="11"> A. Ascend 310</label>
+          <label class="option"><input type="radio" name="q11" value="B" data-question="11"> B. Ascend 910</label>
+          <label class="option"><input type="radio" name="q11" value="C" data-question="11"> C. Ascend Lite</label>
+          <label class="option"><input type="radio" name="q11" value="D" data-question="11"> D. Ascend Tiny</label>
+          <label class="option"><input type="radio" name="q11" value="E" data-question="11"> E. Atlas 100</label>
+        </div>
+        <div class="feedback" id="feedback-11"></div>
+      </div>
+
+      <!-- Q12 -->
+      <div class="question-card" id="question-12">
+        <div class="question-header">Q12. DVPP primarily provides which type of capability?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q12" value="A" data-question="12"> A. Distributed training</label>
+          <label class="option"><input type="radio" name="q12" value="B" data-question="12"> B. Data parallelism</label>
+          <label class="option"><input type="radio" name="q12" value="C" data-question="12"> C. Image and video preprocessing acceleration</label>
+          <label class="option"><input type="radio" name="q12" value="D" data-question="12"> D. CPU virtualization</label>
+          <label class="option"><input type="radio" name="q12" value="E" data-question="12"> E. NPU kernel management</label>
+        </div>
+        <div class="feedback" id="feedback-12"></div>
+      </div>
+
+      <!-- Q13 -->
+      <div class="question-card" id="question-13">
+        <div class="question-header">Q13. HiAI Foundation mainly provides which functionality?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q13" value="A" data-question="13"> A. Cloud orchestration</label>
+          <label class="option"><input type="radio" name="q13" value="B" data-question="13"> B. Mobile AI hardware capabilities</label>
+          <label class="option"><input type="radio" name="q13" value="C" data-question="13"> C. Data annotation services</label>
+          <label class="option"><input type="radio" name="q13" value="D" data-question="13"> D. ModelArts integration only</label>
+          <label class="option"><input type="radio" name="q13" value="E" data-question="13"> E. Distributed GPU training</label>
+        </div>
+        <div class="feedback" id="feedback-13"></div>
+      </div>
+
+      <!-- Q14 -->
+      <div class="question-card" id="question-14">
+        <div class="question-header">Q14. ModelArts “automatic training” primarily helps with:</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q14" value="A" data-question="14"> A. Creating datasets automatically</label>
+          <label class="option"><input type="radio" name="q14" value="B" data-question="14"> B. Generating hardware drivers</label>
+          <label class="option"><input type="radio" name="q14" value="C" data-question="14"> C. Selecting algorithms and tuning models automatically</label>
+          <label class="option"><input type="radio" name="q14" value="D" data-question="14"> D. Designing neural network architectures manually</label>
+          <label class="option"><input type="radio" name="q14" value="E" data-question="14"> E. Creating physical hardware models</label>
+        </div>
+        <div class="feedback" id="feedback-14"></div>
+      </div>
+
+      <!-- Q15 -->
+      <div class="question-card" id="question-15">
+        <div class="question-header">Q15. Which process in ModelArts handles scaling resources at deployment?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q15" value="A" data-question="15"> A. Training job</label>
+          <label class="option"><input type="radio" name="q15" value="B" data-question="15"> B. Inference service</label>
+          <label class="option"><input type="radio" name="q15" value="C" data-question="15"> C. Notebook session</label>
+          <label class="option"><input type="radio" name="q15" value="D" data-question="15"> D. Dataset versioning process</label>
+          <label class="option"><input type="radio" name="q15" value="E" data-question="15"> E. Log analysis task</label>
+        </div>
+        <div class="feedback" id="feedback-15"></div>
+      </div>
+
+      <!-- Q16 -->
+      <div class="question-card" id="question-16">
+        <div class="question-header">Q16. In reinforcement learning, the agent learns by:</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q16" value="A" data-question="16"> A. Receiving labeled datasets</label>
+          <label class="option"><input type="radio" name="q16" value="B" data-question="16"> B. Predicting clusters in static data</label>
+          <label class="option"><input type="radio" name="q16" value="C" data-question="16"> C. Interacting with an environment and receiving rewards</label>
+          <label class="option"><input type="radio" name="q16" value="D" data-question="16"> D. Minimizing cross entropy only</label>
+          <label class="option"><input type="radio" name="q16" value="E" data-question="16"> E. Only backpropagating reconstruction errors</label>
+        </div>
+        <div class="feedback" id="feedback-16"></div>
+      </div>
+
+      <!-- Q17 -->
+      <div class="question-card" id="question-17">
+        <div class="question-header">Q17. The primary role of the Softmax function is to:</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q17" value="A" data-question="17"> A. Normalize input features</label>
+          <label class="option"><input type="radio" name="q17" value="B" data-question="17"> B. Reduce dimensionality</label>
+          <label class="option"><input type="radio" name="q17" value="C" data-question="17"> C. Convert logits into a probability distribution</label>
+          <label class="option"><input type="radio" name="q17" value="D" data-question="17"> D. Perform convolution</label>
+          <label class="option"><input type="radio" name="q17" value="E" data-question="17"> E. Encode sequential data</label>
+        </div>
+        <div class="feedback" id="feedback-17"></div>
+      </div>
+
+      <!-- Q18 -->
+      <div class="question-card" id="question-18">
+        <div class="question-header">Q18. Which part of the neural network is updated during backpropagation?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q18" value="A" data-question="18"> A. Loss value</label>
+          <label class="option"><input type="radio" name="q18" value="B" data-question="18"> B. Labels</label>
+          <label class="option"><input type="radio" name="q18" value="C" data-question="18"> C. Weights</label>
+          <label class="option"><input type="radio" name="q18" value="D" data-question="18"> D. Input data</label>
+          <label class="option"><input type="radio" name="q18" value="E" data-question="18"> E. Test set</label>
+        </div>
+        <div class="feedback" id="feedback-18"></div>
+      </div>
+
+      <!-- Q19 -->
+      <div class="question-card" id="question-19">
+        <div class="question-header">Q19. Gradient vanishing is most commonly associated with which network type?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q19" value="A" data-question="19"> A. CNN</label>
+          <label class="option"><input type="radio" name="q19" value="B" data-question="19"> B. RNN</label>
+          <label class="option"><input type="radio" name="q19" value="C" data-question="19"> C. GAN</label>
+          <label class="option"><input type="radio" name="q19" value="D" data-question="19"> D. Autoencoder</label>
+          <label class="option"><input type="radio" name="q19" value="E" data-question="19"> E. DBN</label>
+        </div>
+        <div class="feedback" id="feedback-19"></div>
+      </div>
+
+      <!-- Q20 -->
+      <div class="question-card" id="question-20">
+        <div class="question-header">Q20. Which hardware advantage is highlighted for NPUs in the training material?</div>
+        <div class="question-type">Type: Single choice</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q20" value="A" data-question="20"> A. Better compatibility with legacy CPUs</label>
+          <label class="option"><input type="radio" name="q20" value="B" data-question="20"> B. Significantly higher compute efficiency for matrix operations</label>
+          <label class="option"><input type="radio" name="q20" value="C" data-question="20"> C. Larger cache memory</label>
+          <label class="option"><input type="radio" name="q20" value="D" data-question="20"> D. Minimal thermal output</label>
+          <label class="option"><input type="radio" name="q20" value="E" data-question="20"> E. No need for compilers or operators</label>
+        </div>
+        <div class="feedback" id="feedback-20"></div>
+      </div>
+
+      <!-- SECTION 2: Multi-select (Q21–Q32) -->
+      <h2>Section 2 – Multiple-choice Questions (two or three correct answers)</h2>
+
+      <!-- Q21 -->
+      <div class="question-card" id="question-21">
+        <div class="question-header">Q21. (Choose TWO) Which two are typical characteristics of supervised learning?</div>
+        <div class="question-type">Type: Multiple choice (choose TWO)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="21"> A. Requires labeled data</label>
+          <label class="option"><input type="checkbox" value="B" data-question="21"> B. Reinforces an agent</label>
+          <label class="option"><input type="checkbox" value="C" data-question="21"> C. Predicts continuous or categorical outcomes</label>
+          <label class="option"><input type="checkbox" value="D" data-question="21"> D. Creates clusters automatically</label>
+          <label class="option"><input type="checkbox" value="E" data-question="21"> E. Does not require ground truth</label>
+        </div>
+        <div class="feedback" id="feedback-21"></div>
+      </div>
+
+      <!-- Q22 -->
+      <div class="question-card" id="question-22">
+        <div class="question-header">Q22. (Choose THREE) Which components are included in a complete ML workflow?</div>
+        <div class="question-type">Type: Multiple choice (choose THREE)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="22"> A. Data preparation</label>
+          <label class="option"><input type="checkbox" value="B" data-question="22"> B. Feature engineering</label>
+          <label class="option"><input type="checkbox" value="C" data-question="22"> C. Model training</label>
+          <label class="option"><input type="checkbox" value="D" data-question="22"> D. Video encoding</label>
+          <label class="option"><input type="checkbox" value="E" data-question="22"> E. CPU frequency tuning</label>
+        </div>
+        <div class="feedback" id="feedback-22"></div>
+      </div>
+
+      <!-- Q23 -->
+      <div class="question-card" id="question-23">
+        <div class="question-header">Q23. (Choose TWO) Which two activation functions are commonly used in deep learning?</div>
+        <div class="question-type">Type: Multiple choice (choose TWO)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="23"> A. ReLU</label>
+          <label class="option"><input type="checkbox" value="B" data-question="23"> B. Dropout</label>
+          <label class="option"><input type="checkbox" value="C" data-question="23"> C. Sigmoid</label>
+          <label class="option"><input type="checkbox" value="D" data-question="23"> D. MaxPool</label>
+          <label class="option"><input type="checkbox" value="E" data-question="23"> E. Softmax loss</label>
+        </div>
+        <div class="feedback" id="feedback-23"></div>
+      </div>
+
+      <!-- Q24 -->
+      <div class="question-card" id="question-24">
+        <div class="question-header">Q24. (Choose THREE) Which are advantages of CNNs mentioned in the training material?</div>
+        <div class="question-type">Type: Multiple choice (choose THREE)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="24"> A. Parameter sharing</label>
+          <label class="option"><input type="checkbox" value="B" data-question="24"> B. Local receptive fields</label>
+          <label class="option"><input type="checkbox" value="C" data-question="24"> C. Strong temporal modeling of sequences</label>
+          <label class="option"><input type="checkbox" value="D" data-question="24"> D. Spatial feature extraction</label>
+          <label class="option"><input type="checkbox" value="E" data-question="24"> E. Automatic annotation of datasets</label>
+        </div>
+        <div class="feedback" id="feedback-24"></div>
+      </div>
+
+      <!-- Q25 -->
+      <div class="question-card" id="question-25">
+        <div class="question-header">Q25. (Choose TWO) Which functions are provided by MindSpore’s Dataset module?</div>
+        <div class="question-type">Type: Multiple choice (choose TWO)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="25"> A. Data loading</label>
+          <label class="option"><input type="checkbox" value="B" data-question="25"> B. Label generation on the fly for all tasks</label>
+          <label class="option"><input type="checkbox" value="C" data-question="25"> C. Data augmentation</label>
+          <label class="option"><input type="checkbox" value="D" data-question="25"> D. Kernel fusion</label>
+          <label class="option"><input type="checkbox" value="E" data-question="25"> E. DVPP configuration</label>
+        </div>
+        <div class="feedback" id="feedback-25"></div>
+      </div>
+
+      <!-- Q26 -->
+      <div class="question-card" id="question-26">
+        <div class="question-header">Q26. (Choose THREE) Which technologies are part of Huawei EI services?</div>
+        <div class="question-type">Type: Multiple choice (choose THREE)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="26"> A. ModelArts</label>
+          <label class="option"><input type="checkbox" value="B" data-question="26"> B. EIHealth</label>
+          <label class="option"><input type="checkbox" value="C" data-question="26"> C. EIImage</label>
+          <label class="option"><input type="checkbox" value="D" data-question="26"> D. HiAI Engine</label>
+          <label class="option"><input type="checkbox" value="E" data-question="26"> E. DVPP API</label>
+        </div>
+        <div class="feedback" id="feedback-26"></div>
+      </div>
+
+      <!-- Q27 -->
+      <div class="question-card" id="question-27">
+        <div class="question-header">Q27. (Choose TWO) Which two optimizers aim to accelerate gradient descent?</div>
+        <div class="question-type">Type: Multiple choice (choose TWO)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="27"> A. Adam</label>
+          <label class="option"><input type="checkbox" value="B" data-question="27"> B. SGD</label>
+          <label class="option"><input type="checkbox" value="C" data-question="27"> C. Momentum</label>
+          <label class="option"><input type="checkbox" value="D" data-question="27"> D. Random search</label>
+          <label class="option"><input type="checkbox" value="E" data-question="27"> E. Uniform sampling</label>
+        </div>
+        <div class="feedback" id="feedback-27"></div>
+      </div>
+
+      <!-- Q28 -->
+      <div class="question-card" id="question-28">
+        <div class="question-header">Q28. (Choose THREE) Which components are part of the HiAI platform?</div>
+        <div class="question-type">Type: Multiple choice (choose THREE)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="28"> A. HiAI Foundation</label>
+          <label class="option"><input type="checkbox" value="B" data-question="28"> B. HiAI Engine</label>
+          <label class="option"><input type="checkbox" value="C" data-question="28"> C. HiAI Service</label>
+          <label class="option"><input type="checkbox" value="D" data-question="28"> D. ModelArts</label>
+          <label class="option"><input type="checkbox" value="E" data-question="28"> E. PyTorch Hub</label>
+        </div>
+        <div class="feedback" id="feedback-28"></div>
+      </div>
+
+      <!-- Q29 -->
+      <div class="question-card" id="question-29">
+        <div class="question-header">Q29. (Choose TWO) Which two statements describe Ascend 310?</div>
+        <div class="question-type">Type: Multiple choice (choose TWO)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="29"> A. Low-power edge inference chip</label>
+          <label class="option"><input type="checkbox" value="B" data-question="29"> B. Optimized for high-end training only</label>
+          <label class="option"><input type="checkbox" value="C" data-question="29"> C. Used in Atlas 200DK</label>
+          <label class="option"><input type="checkbox" value="D" data-question="29"> D. Requires GPU virtualization</label>
+          <label class="option"><input type="checkbox" value="E" data-question="29"> E. Performs only cloud-based tasks</label>
+        </div>
+        <div class="feedback" id="feedback-29"></div>
+      </div>
+
+      <!-- Q30 -->
+      <div class="question-card" id="question-30">
+        <div class="question-header">Q30. (Choose THREE) Which are functions of ModelArts dataset management?</div>
+        <div class="question-type">Type: Multiple choice (choose THREE)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="30"> A. Dataset versioning</label>
+          <label class="option"><input type="checkbox" value="B" data-question="30"> B. Annotation</label>
+          <label class="option"><input type="checkbox" value="C" data-question="30"> C. Auto-mounting storage</label>
+          <label class="option"><input type="checkbox" value="D" data-question="30"> D. PRNG seed control for all jobs</label>
+          <label class="option"><input type="checkbox" value="E" data-question="30"> E. Custom hardware driver building</label>
+        </div>
+        <div class="feedback" id="feedback-30"></div>
+      </div>
+
+      <!-- Q31 -->
+      <div class="question-card" id="question-31">
+        <div class="question-header">Q31. (Choose TWO) Which two issues can dropout help reduce?</div>
+        <div class="question-type">Type: Multiple choice (choose TWO)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="31"> A. Overfitting</label>
+          <label class="option"><input type="checkbox" value="B" data-question="31"> B. Underfitting</label>
+          <label class="option"><input type="checkbox" value="C" data-question="31"> C. Model over-dependence on specific neurons (can aid compression/pruning)</label>
+          <label class="option"><input type="checkbox" value="D" data-question="31"> D. Data leakage</label>
+          <label class="option"><input type="checkbox" value="E" data-question="31"> E. GPU fragmentation</label>
+        </div>
+        <div class="feedback" id="feedback-31"></div>
+      </div>
+
+      <!-- Q32 -->
+      <div class="question-card" id="question-32">
+        <div class="question-header">Q32. (Choose TWO) Which two are components of a recurrent neural network?</div>
+        <div class="question-type">Type: Multiple choice (choose TWO)</div>
+        <div class="options">
+          <label class="option"><input type="checkbox" value="A" data-question="32"> A. Hidden state</label>
+          <label class="option"><input type="checkbox" value="B" data-question="32"> B. Convolution kernel</label>
+          <label class="option"><input type="checkbox" value="C" data-question="32"> C. Recurrent connection</label>
+          <label class="option"><input type="checkbox" value="D" data-question="32"> D. Attention map</label>
+          <label class="option"><input type="checkbox" value="E" data-question="32"> E. BatchNorm layer</label>
+        </div>
+        <div class="feedback" id="feedback-32"></div>
+      </div>
+
+      <!-- SECTION 3: True / False (Q33–Q40) -->
+      <h2>Section 3 – True / False</h2>
+      <p style="font-size:0.9rem;color:#4b5563;margin-top:-8px;margin-bottom:12px;">
+        Select <strong>True</strong> or <strong>False</strong> for each statement.
+      </p>
+
+      <!-- Q33 -->
+      <div class="question-card" id="question-33">
+        <div class="question-header">Q33. AI, ML, and DL represent the same concept with different names.</div>
+        <div class="question-type">Type: True / False</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q33" value="A" data-question="33"> A. True</label>
+          <label class="option"><input type="radio" name="q33" value="B" data-question="33"> B. False</label>
+        </div>
+        <div class="feedback" id="feedback-33"></div>
+      </div>
+
+      <!-- Q34 -->
+      <div class="question-card" id="question-34">
+        <div class="question-header">Q34. K-means is an unsupervised learning algorithm.</div>
+        <div class="question-type">Type: True / False</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q34" value="A" data-question="34"> A. True</label>
+          <label class="option"><input type="radio" name="q34" value="B" data-question="34"> B. False</label>
+        </div>
+        <div class="feedback" id="feedback-34"></div>
+      </div>
+
+      <!-- Q35 -->
+      <div class="question-card" id="question-35">
+        <div class="question-header">Q35. CNNs are well suited for tasks involving spatial feature extraction.</div>
+        <div class="question-type">Type: True / False</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q35" value="A" data-question="35"> A. True</label>
+          <label class="option"><input type="radio" name="q35" value="B" data-question="35"> B. False</label>
+        </div>
+        <div class="feedback" id="feedback-35"></div>
+      </div>
+
+      <!-- Q36 -->
+      <div class="question-card" id="question-36">
+        <div class="question-header">Q36. RNNs process data assuming all inputs are independent of each other.</div>
+        <div class="question-type">Type: True / False</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q36" value="A" data-question="36"> A. True</label>
+          <label class="option"><input type="radio" name="q36" value="B" data-question="36"> B. False</label>
+        </div>
+        <div class="feedback" id="feedback-36"></div>
+      </div>
+
+      <!-- Q37 -->
+      <div class="question-card" id="question-37">
+        <div class="question-header">Q37. ModelArts supports automatic training without requiring manual hyperparameter tuning.</div>
+        <div class="question-type">Type: True / False</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q37" value="A" data-question="37"> A. True</label>
+          <label class="option"><input type="radio" name="q37" value="B" data-question="37"> B. False</label>
+        </div>
+        <div class="feedback" id="feedback-37"></div>
+      </div>
+
+      <!-- Q38 -->
+      <div class="question-card" id="question-38">
+        <div class="question-header">Q38. Ascend 910 is designed primarily for inference at the network edge.</div>
+        <div class="question-type">Type: True / False</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q38" value="A" data-question="38"> A. True</label>
+          <label class="option"><input type="radio" name="q38" value="B" data-question="38"> B. False</label>
+        </div>
+        <div class="feedback" id="feedback-38"></div>
+      </div>
+
+      <!-- Q39 -->
+      <div class="question-card" id="question-39">
+        <div class="question-header">Q39. MindSpore supports automatic differentiation.</div>
+        <div class="question-type">Type: True / False</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q39" value="A" data-question="39"> A. True</label>
+          <label class="option"><input type="radio" name="q39" value="B" data-question="39"> B. False</label>
+        </div>
+        <div class="feedback" id="feedback-39"></div>
+      </div>
+
+      <!-- Q40 -->
+      <div class="question-card" id="question-40">
+        <div class="question-header">Q40. Dropout increases overfitting by encouraging dependency on specific neurons.</div>
+        <div class="question-type">Type: True / False</div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q40" value="A" data-question="40"> A. True</label>
+          <label class="option"><input type="radio" name="q40" value="B" data-question="40"> B. False</label>
+        </div>
+        <div class="feedback" id="feedback-40"></div>
+      </div>
+
+      <div class="submit-wrapper">
+        <button type="button" id="submit-btn">Submit Answers</button>
+      </div>
+    </form>
+
+    <div id="result">
+      <h2>Result</h2>
+      <div id="result-summary"></div>
+      <div id="wrong-list"></div>
+      <p style="margin-top:8px;font-size:0.88rem;color:#4b5563;">
+        <strong>Obs. (PT):</strong> As explicações aparecem abaixo de cada questão, mostrando se você acertou ou precisa revisar.<br/>
+        <strong>Note (EN):</strong> Explanations are shown below each question, highlighting which ones you should review.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const quizData = {
+      1: { type: "single", correct: ["B"],
+        en: "AI is defined as enabling machines to perform tasks that normally require human intelligence, such as perception and decision-making.",
+        pt: "IA é definida como a capacidade de máquinas executarem tarefas que normalmente exigem inteligência humana, como percepção e tomada de decisão."
+      },
+      2: { type: "single", correct: ["D"],
+        en: "Supervised learning relies on labeled data, where each input has an associated ground truth label.",
+        pt: "Aprendizado supervisionado depende de dados rotulados, em que cada entrada possui um rótulo verdadeiro associado."
+      },
+      3: { type: "single", correct: ["C"],
+        en: "Feature engineering usually comes after raw data preprocessing and before model training in the ML workflow.",
+        pt: "A engenharia de atributos normalmente ocorre após o pré-processamento de dados brutos e antes do treinamento do modelo no fluxo de ML."
+      },
+      4: { type: "single", correct: ["C"],
+        en: "Overfitting happens when the model fits noise or specific details in the training set and fails to generalize.",
+        pt: "Overfitting ocorre quando o modelo se ajusta a ruídos ou detalhes específicos do conjunto de treino e não generaliza bem."
+      },
+      5: { type: "single", correct: ["B"],
+        en: "For imbalanced datasets, metrics such as recall or F1-score are more informative than plain accuracy.",
+        pt: "Para conjuntos desbalanceados, métricas como recall ou F1 são mais informativas do que a acurácia simples."
+      },
+      6: { type: "single", correct: ["B"],
+        en: "Activation functions inject non-linearity into the network, enabling it to model complex relationships.",
+        pt: "Funções de ativação introduzem não-linearidade na rede, permitindo modelar relacionamentos complexos."
+      },
+      7: { type: "single", correct: ["C"],
+        en: "Convolution layers perform local weighted operations and are responsible for extracting spatial features.",
+        pt: "Camadas de convolução realizam operações locais ponderadas e são responsáveis por extrair características espaciais."
+      },
+      8: { type: "single", correct: ["C"],
+        en: "RNNs are specifically designed to process sequential data by maintaining a hidden state over time.",
+        pt: "RNNs são projetadas para processar dados sequenciais mantendo um estado oculto ao longo do tempo."
+      },
+      9: { type: "single", correct: ["C"],
+        en: "Adam adapts individual learning rates for each parameter based on first and second moment estimates.",
+        pt: "O Adam ajusta taxas de aprendizado individuais para cada parâmetro usando estimativas de primeiro e segundo momento."
+      },
+      10: { type: "single", correct: ["C"],
+        en: "MindSpore supports automatic differentiation, computing gradients automatically through auto-diff.",
+        pt: "O MindSpore suporta diferenciação automática, calculando gradientes automaticamente via auto-diff."
+      },
+      11: { type: "single", correct: ["B"],
+        en: "Ascend 910 is designed for high-performance AI training workloads in data centers.",
+        pt: "O Ascend 910 é projetado para cargas de trabalho de treinamento de IA de alto desempenho em data centers."
+      },
+      12: { type: "single", correct: ["C"],
+        en: "DVPP accelerates image and video preprocessing, offloading these operations to dedicated hardware.",
+        pt: "O DVPP acelera o pré-processamento de imagens e vídeos, transferindo essas operações para hardware dedicado."
+      },
+      13: { type: "single", correct: ["B"],
+        en: "HiAI Foundation exposes mobile AI hardware capabilities, allowing apps to leverage on-device NPUs.",
+        pt: "O HiAI Foundation expõe capacidades de hardware de IA em dispositivos móveis, permitindo que apps usem NPUs locais."
+      },
+      14: { type: "single", correct: ["C"],
+        en: "Automatic training in ModelArts selects algorithms and tunes models automatically, simplifying AutoML.",
+        pt: "O treinamento automático no ModelArts seleciona algoritmos e ajusta modelos de forma automática, simplificando o AutoML."
+      },
+      15: { type: "single", correct: ["B"],
+        en: "Inference services in ModelArts manage model deployment, scaling resources and exposing endpoints.",
+        pt: "Serviços de inferência no ModelArts gerenciam a implantação do modelo, escalando recursos e expondo endpoints."
+      },
+      16: { type: "single", correct: ["C"],
+        en: "In reinforcement learning, the agent interacts with an environment and learns from rewards and penalties.",
+        pt: "No aprendizado por reforço, o agente interage com um ambiente e aprende a partir de recompensas e penalidades."
+      },
+      17: { type: "single", correct: ["C"],
+        en: "Softmax converts raw logits into a probability distribution over output classes.",
+        pt: "A Softmax converte logits em uma distribuição de probabilidade sobre as classes de saída."
+      },
+      18: { type: "single", correct: ["C"],
+        en: "During backpropagation, network weights are updated using computed gradients and an optimizer.",
+        pt: "Durante o backpropagation, os pesos da rede são atualizados usando gradientes calculados e um otimizador."
+      },
+      19: { type: "single", correct: ["B"],
+        en: "Traditional RNNs often suffer from vanishing gradients when modeling long sequences.",
+        pt: "RNNs tradicionais frequentemente sofrem com gradientes que desaparecem ao modelar sequências longas."
+      },
+      20: { type: "single", correct: ["B"],
+        en: "NPUs provide very high efficiency for matrix and tensor operations compared to general-purpose CPUs.",
+        pt: "As NPUs oferecem alta eficiência para operações com matrizes e tensores em comparação a CPUs de uso geral."
+      },
+
+      21: { type: "multi", correct: ["A","C"],
+        en: "Supervised learning uses labeled data and can handle classification or regression of known outputs.",
+        pt: "O aprendizado supervisionado usa dados rotulados e pode tratar de classificação ou regressão de saídas conhecidas."
+      },
+      22: { type: "multi", correct: ["A","B","C"],
+        en: "A typical ML workflow covers data preparation, feature engineering, and model training as core stages.",
+        pt: "Um fluxo típico de ML inclui preparação de dados, engenharia de atributos e treinamento de modelo como etapas centrais."
+      },
+      23: { type: "multi", correct: ["A","C"],
+        en: "ReLU and Sigmoid are standard activation functions widely used in deep learning models.",
+        pt: "ReLU e Sigmoid são funções de ativação padrão amplamente usadas em modelos de deep learning."
+      },
+      24: { type: "multi", correct: ["A","B","D"],
+        en: "CNNs benefit from parameter sharing, local receptive fields, and powerful spatial feature extraction.",
+        pt: "As CNNs se beneficiam de compartilhamento de parâmetros, campos receptivos locais e forte extração de características espaciais."
+      },
+      25: { type: "multi", correct: ["A","C"],
+        en: "MindSpore’s Dataset module handles loading data and performing data augmentation operations.",
+        pt: "O módulo Dataset do MindSpore cuida do carregamento de dados e de operações de aumento de dados (data augmentation)."
+      },
+      26: { type: "multi", correct: ["A","B","C"],
+        en: "Huawei EI includes services like ModelArts, EIHealth, and EIImage for different AI application domains.",
+        pt: "O Huawei EI inclui serviços como ModelArts, EIHealth e EIImage para diferentes domínios de aplicação de IA."
+      },
+      27: { type: "multi", correct: ["A","C"],
+        en: "Adam and Momentum-based methods are designed to speed up convergence compared to plain SGD.",
+        pt: "Adam e métodos baseados em Momentum são projetados para acelerar a convergência em comparação com o SGD puro."
+      },
+      28: { type: "multi", correct: ["A","B","C"],
+        en: "The HiAI platform consists of HiAI Foundation, HiAI Engine, and HiAI Service working together.",
+        pt: "A plataforma HiAI é composta por HiAI Foundation, HiAI Engine e HiAI Service atuando em conjunto."
+      },
+      29: { type: "multi", correct: ["A","C"],
+        en: "Ascend 310 is a low-power edge inference chip and is used in devices like the Atlas 200DK.",
+        pt: "O Ascend 310 é um chip de inferência de borda de baixo consumo e é usado em dispositivos como o Atlas 200DK."
+      },
+      30: { type: "multi", correct: ["A","B","C"],
+        en: "ModelArts dataset management supports versioning, annotation, and automatic storage mounting.",
+        pt: "O gerenciamento de conjuntos de dados no ModelArts suporta versionamento, anotação e montagem automática de armazenamento."
+      },
+      31: { type: "multi", correct: ["A","C"],
+        en: "Dropout reduces overfitting by randomly dropping neurons and can support later model pruning/compression.",
+        pt: "O dropout reduz overfitting ao desativar neurônios aleatoriamente e pode facilitar posterior poda e compressão do modelo."
+      },
+      32: { type: "multi", correct: ["A","C"],
+        en: "RNNs maintain a hidden state and use recurrent connections to propagate information through time.",
+        pt: "As RNNs mantêm um estado oculto e usam conexões recorrentes para propagar informações ao longo do tempo."
+      },
+
+      33: { type: "tf", correct: ["B"],
+        en: "AI is the broader field, ML is a subset of AI, and DL is a subset of ML; they are not identical concepts.",
+        pt: "IA é o campo mais amplo, ML é um subconjunto da IA e DL é um subconjunto de ML; não são conceitos idênticos."
+      },
+      34: { type: "tf", correct: ["A"],
+        en: "K-means groups data points without labels and is a classic unsupervised clustering algorithm.",
+        pt: "O K-means agrupa pontos de dados sem rótulos e é um clássico algoritmo de clustering não supervisionado."
+      },
+      35: { type: "tf", correct: ["A"],
+        en: "CNNs are especially effective for spatial feature extraction, such as in image recognition tasks.",
+        pt: "As CNNs são especialmente eficazes para extração de características espaciais, como em tarefas de reconhecimento de imagens."
+      },
+      36: { type: "tf", correct: ["B"],
+        en: "RNNs explicitly model dependencies between sequential inputs rather than assuming independence.",
+        pt: "As RNNs modelam explicitamente dependências entre entradas sequenciais, em vez de assumir independência."
+      },
+      37: { type: "tf", correct: ["A"],
+        en: "ModelArts provides automatic training features that can search algorithms and hyperparameters automatically.",
+        pt: "O ModelArts oferece recursos de treinamento automático que podem buscar algoritmos e hiperparâmetros de forma automática."
+      },
+      38: { type: "tf", correct: ["B"],
+        en: "Ascend 910 targets high-performance training, while Ascend 310 focuses on edge inference.",
+        pt: "O Ascend 910 é voltado para treinamento de alto desempenho, enquanto o Ascend 310 foca em inferência de borda."
+      },
+      39: { type: "tf", correct: ["A"],
+        en: "MindSpore includes an automatic differentiation mechanism for computing gradients.",
+        pt: "O MindSpore inclui um mecanismo de diferenciação automática para calcular gradientes."
+      },
+      40: { type: "tf", correct: ["B"],
+        en: "Dropout combats overfitting by reducing reliance on specific neurons, rather than increasing it.",
+        pt: "O dropout combate o overfitting reduzindo a dependência de neurônios específicos, em vez de aumentá-la."
+      }
+    };
+
+    function arraysEqualAsSets(a, b) {
+      if (a.length !== b.length) return false;
+      const setA = new Set(a);
+      const setB = new Set(b);
+      if (setA.size !== setB.size) return false;
+      for (const v of setA) {
+        if (!setB.has(v)) return false;
+      }
+      return true;
+    }
+
+    document.getElementById("submit-btn").addEventListener("click", function () {
+      let totalQuestions = Object.keys(quizData).length;
+      let correctCount = 0;
+      let wrongQuestions = [];
+
+      // reset visuals
+      for (const qid in quizData) {
+        const card = document.getElementById("question-" + qid);
+        const fb = document.getElementById("feedback-" + qid);
+        if (card) card.classList.remove("correct", "incorrect");
+        if (fb) {
+          fb.style.display = "none";
+          fb.classList.remove("correct", "incorrect");
+          fb.innerHTML = "";
+        }
+      }
+
+      // evaluate
+      for (const qid in quizData) {
+        const qData = quizData[qid];
+        const inputs = document.querySelectorAll('input[data-question="' + qid + '"]');
+        const selected = [];
+        inputs.forEach(inp => {
+          if (inp.checked) selected.push(inp.value);
+        });
+
+        const isCorrect = arraysEqualAsSets(selected, qData.correct);
+        const card = document.getElementById("question-" + qid);
+        const fb = document.getElementById("feedback-" + qid);
+
+        if (isCorrect) {
+          correctCount++;
+          if (card) card.classList.add("correct");
+          if (fb) {
+            fb.style.display = "block";
+            fb.classList.add("correct");
+            fb.innerHTML =
+              '<div class="feedback-title">Correct ✅</div>' +
+              '<div class="feedback-en"><strong>Explanation (EN):</strong> ' + qData.en + '</div>' +
+              '<div class="feedback-pt"><strong>Explicação (PT):</strong> ' + qData.pt + '</div>';
+          }
+        } else {
+          wrongQuestions.push(qid);
+          if (card) card.classList.add("incorrect");
+          if (fb) {
+            fb.style.display = "block";
+            fb.classList.add("incorrect");
+            const chosenText = selected.length
+              ? 'Your answer: ' + selected.join(", ")
+              : 'Your answer: (no option selected)';
+            const correctText = 'Correct answer: ' + qData.correct.join(", ");
+            fb.innerHTML =
+              '<div class="feedback-title">Incorrect ❌</div>' +
+              '<div style="font-size:0.85rem;margin-bottom:4px;">' + chosenText + ' | ' + correctText + '</div>' +
+              '<div class="feedback-en"><strong>Explanation (EN):</strong> ' + qData.en + '</div>' +
+              '<div class="feedback-pt"><strong>Explicação (PT):</strong> ' + qData.pt + '</div>';
+          }
+        }
+      }
+
+      const resultDiv = document.getElementById("result");
+      const summaryDiv = document.getElementById("result-summary");
+      const wrongListDiv = document.getElementById("wrong-list");
+      const percentage = ((correctCount / totalQuestions) * 100).toFixed(1);
+
+      resultDiv.style.display = "block";
+      summaryDiv.innerHTML =
+        '<p><strong>Score:</strong> ' + correctCount + ' / ' + totalQuestions +
+        ' (' + percentage + '%)</p>' +
+        '<p><strong>Resumo (PT):</strong> Você acertou ' + correctCount + ' de ' + totalQuestions +
+        ' questões (' + percentage + '%).</p>';
+
+      if (wrongQuestions.length > 0) {
+        wrongListDiv.innerHTML =
+          'Questions to review (EN): ' + wrongQuestions.join(", ") +
+          '<br/>Questões para revisar (PT): ' + wrongQuestions.join(", ");
+      } else {
+        wrongListDiv.innerHTML =
+          'Excellent! You answered all questions correctly. / Excelente! Você acertou todas as questões.';
+      }
+
+      resultDiv.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  </script>
+</body>
+</html>
